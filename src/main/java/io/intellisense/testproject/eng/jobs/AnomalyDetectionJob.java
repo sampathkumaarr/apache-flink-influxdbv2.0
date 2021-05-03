@@ -29,7 +29,7 @@ public class AnomalyDetectionJob {
     public static final String SENSOR_DATA = "sensorData";
     public static final String SENSOR_DATA_FILE_DEFAULT_VALUE = "sensor-data.csv";
 
-    public static final int TUMBLING_WINDOW_BY_COUNT_VALUE = 4;
+    public static final int TUMBLING_WINDOW_BY_COUNT_VALUE = 100;
 
     public static final String DATASOURCE_OPERATOR = "datasource-operator";
     public static final String ANOMALY_DETECTION_JOB_NAME = "Anomaly Detection Job";
