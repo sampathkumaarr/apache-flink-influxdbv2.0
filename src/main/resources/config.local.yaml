@@ -1,0 +1,14 @@
+##############################################################
+# CONFIGURATION VALUES TO RUN THE JOB ON A LOCAL ENVIRONMENT #
+##############################################################
+project.version = ${project.version}
+
+# Flink related
+flink.parallelism = 1
+flink.checkpointingEnabled = false
+
+# Sink related
+influxdb.url = localhost:8086
+influxdb.username = admin
+influxdb.password = admin
+influxdb.dbName = anomaly_detection
