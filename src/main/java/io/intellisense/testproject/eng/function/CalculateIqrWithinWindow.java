@@ -41,14 +41,10 @@ public class CalculateIqrWithinWindow  extends ProcessAllWindowFunction<Row, Lis
             }
             for (Row rowRecord : iterable) {
                 for (int sensorsCounter = 1; sensorsCounter <= howManySensors; sensorsCounter++) {
-                    Object tempValue = rowRecord.getField(sensorsCounter);
-                    if (tempValue != null) {
-                        mapOfSensorsDataArrayList.get((SENSOR_HYPHEN + sensorsCounter))
-                                .add(Double.parseDouble((String) tempValue));
-                    } else {
-                        mapOfSensorsDataArrayList.get((SENSOR_HYPHEN + sensorsCounter))
-                                .add(Double.NaN);
-                    }
+                    Optional <String> tempValue = Optional.of(((String)rowRecord.getField(sensorsCounter)).trim()).filter(input -> !input.isEmpty());
+                    Double parsedValue = tempValue.map((input) -> Double.parseDouble(input)).orElse(Double.NaN);
+                    mapOfSensorsDataArrayList.get((SENSOR_HYPHEN + sensorsCounter))
+                                .add(parsedValue);
                 }
             }
             // Iterate through number of Sensors and the window records array
@@ -77,11 +73,14 @@ public class CalculateIqrWithinWindow  extends ProcessAllWindowFunction<Row, Lis
                 System.out.println(row.getField(10));*/
 
                 for (int i = 1; i <= howManySensors; i++) {
+                    Optional <String> tempValue = Optional.of(((String)row.getField(i)).trim()).filter(input -> !input.isEmpty());
+                    Double parsedValue = tempValue.map((input) -> Double.parseDouble(input)).orElse(Double.NaN);
                     SensorsDataPoint sensorsDataPoint = new SensorsDataPoint(
                             (SENSOR_HYPHEN + i),
-                            Double.parseDouble((String) row.getField(i)),
-                            calculateAnomalyScore(Double.parseDouble((String) row.getField(i)),
+                            parsedValue,
+                            calculateAnomalyScore(parsedValue,
                                     mapOfSensorsIQR.get((SENSOR_HYPHEN + i))),
+                                    //Instead of writing actual timestamp, I am writing Instant.now() to easily view in InfluxDB
                                     //Instant.parse((String) row.getField(0))
                                     Instant.now());
                     sensorsDataPointList.add(sensorsDataPoint);
@@ -89,8 +88,8 @@ public class CalculateIqrWithinWindow  extends ProcessAllWindowFunction<Row, Lis
             }
             System.out.println("sensorsDataPointList:" + sensorsDataPointList);
             collector.collect(sensorsDataPointList);
-            System.out.println("***************************");
-            Thread.sleep(2000);
+            //System.out.println("***************************");
+            //Thread.sleep(2000);
         }
     }
 
@@ -106,7 +105,7 @@ public class CalculateIqrWithinWindow  extends ProcessAllWindowFunction<Row, Lis
         }
     };
 
-    /*BiFunction<Double, Double, Double> calculateAnomalyScore = (value, iqr) -> {
+    /*transient BiFunction<Double, Double, Double> calculateAnomalyScore = (value, iqr) -> {
         if (value < (1.5 * iqr)) {
             return 0.0;
         } else if ((value >= (1.5 * iqr)) && (value < (3 * iqr))) {

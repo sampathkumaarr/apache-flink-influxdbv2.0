@@ -78,6 +78,10 @@
                                 </filter>
                             </filters>
                             <transformers>
+                                <!-- add this to combine the PipelineExecutorFactory files into one -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/org.apache.flink.core.execution.PipelineExecutorFactory</resource>
+                                </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>io.intellisense.testproject.eng.jobs.AnomalyDetectionJob</mainClass>
                                 </transformer>
@@ -86,6 +90,44 @@
                     </execution>
                 </executions>
             </plugin>
+<!--            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <from>
+                        <image>openjdk:alpine</image>
+                    </from>
+                    <to>
+                        <image></image>
+                        <tags>
+                            <tag>tag2</tag>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
+                    <container>
+                        &lt;!&ndash;<jvmFlags>
+                            <jvmFlag>-Dmy.property=example.value</jvmFlag>
+                            <jvmFlag>-Xms512m</jvmFlag>
+                            <jvmFlag>-Xdebug</jvmFlag>
+                        </jvmFlags>&ndash;&gt;
+                        <mainClass>io.intellisense.testproject.eng.jobs.AnomalyDetectionJob</mainClass>
+                        &lt;!&ndash;<args>
+                            <arg>some</arg>
+                            <arg>args</arg>
+                        </args>
+                        <ports>
+                            <port>1000</port>
+                            <port>2000-2003/udp</port>
+                        </ports>
+                        <labels>
+                            <key1>value1</key1>
+                            <key2>value2</key2>
+                        </labels>&ndash;&gt;
+                        <format>OCI</format>
+                    </container>
+                </configuration>
+            </plugin>-->
             <!-- Maven test -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

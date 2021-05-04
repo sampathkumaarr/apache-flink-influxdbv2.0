@@ -1,0 +1,6 @@
+io\intellisense\testproject\eng\jobs\AnomalyDetectionJob.class
+io\intellisense\testproject\eng\model\SensorsDataPoint.class
+io\intellisense\testproject\eng\function\InterQuartileRangeCalculator.class
+io\intellisense\testproject\eng\datasource\CsvDatasource.class
+io\intellisense\testproject\eng\sink\influxdb\InfluxDBSinkv2.class
+io\intellisense\testproject\eng\function\CalculateIqrWithinWindow.class

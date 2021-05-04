@@ -3,12 +3,16 @@
 ##############################################################
 project.version = ${project.version}
 
+# Project configuration
+tumbling.window.count = 100
+
 # Flink related
 flink.parallelism = 1
 flink.checkpointingEnabled = false
 
 # Sink related
 influxdb.url = localhost:8086
-influxdb.username = admin
-influxdb.password = admin
-influxdb.dbName = anomaly_detection
+influxdb.authenticationToken = y8zPNnTzC29Y_OO8kp2ovz2BM0snVe36bHgvRW2tIRQr-KDIGTKml844OGhfY3-gMkludpiX7xi6VsyiU9xjyw==
+influxdb.organisationName = intellisense
+influxdb.bucket = anomaly-detection
+
