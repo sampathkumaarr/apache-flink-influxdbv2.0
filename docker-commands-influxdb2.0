@@ -1,0 +1,2 @@
+docker image pull influxdb:2.0.6
+docker run -p 8086:8086 -e DOCKER_INFLUXDB_INIT_MODE=setup -e DOCKER_INFLUXDB_INIT_USERNAME=admin  -e DOCKER_INFLUXDB_INIT_PASSWORD=realtime -e DOCKER_INFLUXDB_INIT_ORG=intellisense -e DOCKER_INFLUXDB_INIT_BUCKET=anomaly-detection -e  DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=y8zPNnTzC29Y_OO8kp2ovz2BM0snVe36bHgvRW2tIRQr-KDIGTKml844OGhfY3-gMkludpiX7xi6VsyiU9xjyw== influxdb:2.0.6
